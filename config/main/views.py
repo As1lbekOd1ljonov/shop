@@ -1,23 +1,42 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView
 
 from .form import CommentForm
 from .models import Category, Product, ProductImage
 
 
-def index(request: HttpRequest):
-    category = Category.objects.all()
-    product = Product.objects.all()
-    product_image = ProductImage.objects.all()
+from django.shortcuts import render
+from django.views.generic import ListView
+from .models import Category, Product, ProductImage
 
-    context = {
-        "category": category,
-        "product": product,
-        "product_image": product_image,
-    }
+class IndexView(ListView):
+    template_name = "index.html"
+    context_object_name = "products"
+    model = Product
 
-    return render(request,"index.html", context)
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        category_slug = self.request.GET.get('category')
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+
+        product_images = {image.product_id: image.photo.url for image in ProductImage.objects.all()}
+        context["product_images"] = product_images
+        return context
+
+
+def menu_product(request):
+    return render(request, "menu.html")
+
+
+
 
 
 
