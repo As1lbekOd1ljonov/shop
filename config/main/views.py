@@ -36,7 +36,14 @@ def menu_product(request):
     return render(request, "menu.html")
 
 
+def product_list(request):
+    min_price = request.GET.get('min_price', 0)
+    max_price = request.GET.get('max_price', 100000)
 
+    products = Product.objects.filter(price__gte=min_price, price__lte=max_price)
+    data = list(products.values('id', 'name', 'price'))
+
+    return JsonResponse(data, safe=False)
 
 
 
