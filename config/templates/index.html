@@ -281,12 +281,14 @@
                         <img src="{{ i.photo.url }}" alt="">
                     </div>
                     <div class="detail-box">
-                        <h5>
+                      <a href="{% url 'product_about' i.slug %}">
+                              <h5>
                             {{ i.name }}
                         </h5>
                         <p>
                             {{ i.description }}
                         </p>
+                      </a>
                         <div class="options">
                             <h6>{{ i.price }}$</h6>
                             <a href="">

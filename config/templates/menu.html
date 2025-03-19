@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-
-  <!-- offer section -->
-
-  <section class="offer_section layout_padding-bottom">
+<section class="offer_section layout_padding-bottom">
     <div class="offer_container">
       <div class="container ">
         <div class="row">
@@ -163,12 +160,12 @@
         </h2>
       </div>
 
-      <ul class="filters_menu">
+    <ul class="filters_menu">
         <li class="active" data-filter="*">All</li>
         {% for i in categories %}
         <li data-filter="">{{ i.name }}</li>
         {% endfor %}
-      </ul>
+    </ul>
 
   <div class="filters-content">
     <div class="row grid">
@@ -180,12 +177,14 @@
                         <img src="{{ i.photo.url }}" alt="">
                     </div>
                     <div class="detail-box">
-                        <h5>
+                        <a href="">
+                            <h5>
                             {{ i.name }}
                         </h5>
                         <p>
                             {{ i.description }}
                         </p>
+                        </a>
                         <div class="options">
                             <h6>{{ i.price }}$</h6>
                             <a href="">
@@ -228,5 +227,6 @@
       </div>
     </div>
   </section>
+<!-- offer section -->
 
   <!-- end food section -->

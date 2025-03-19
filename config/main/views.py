@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
@@ -64,3 +64,11 @@ def product_detail(request, product_id):
             return redirect('product_detail', product_id=product.id)
 
     return render(request, 'product_detail.html', {'product': product, 'comments': comments, 'form': form})
+
+
+def product_about(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    context = {
+        "product": product
+    }
+    return render(request, "about.html", context)

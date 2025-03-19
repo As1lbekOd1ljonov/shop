@@ -22,6 +22,7 @@ class Product(models.Model):
     discount = models.IntegerField(default=0)
     quantity = models.IntegerField(default=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    reyting = models.IntegerField(max_length=5)
 
 
     def __str__(self):

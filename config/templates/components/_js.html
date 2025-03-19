@@ -23,3 +23,24 @@
 
 
 
+  <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+
+        function updateStars(value) {
+            stars.forEach(star => {
+                star.classList.remove('selected');
+                if (star.getAttribute('data-value') <= value) {
+                    star.classList.add('selected');
+                }
+            });
+        }
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                ratingInput.value = value;
+                updateStars(value);
+            });
+        });
+    </script>

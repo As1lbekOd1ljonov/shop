@@ -14,3 +14,23 @@
   <link href="{% static 'css/style.css' %}" rel="stylesheet" />
   <!-- responsive style -->
   <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+
+  <style>
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        .star {
+            font-size: 30px;
+            cursor: pointer;
+            color: gray;
+        }
+        .star:hover,
+        .star:hover ~ .star,
+        .star.selected,
+        .star.selected ~ .star {
+            color: gold;
+        }
+    </style>
