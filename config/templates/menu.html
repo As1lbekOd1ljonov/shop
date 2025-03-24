@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% load static %}
+
+
+{% block food %}
 <section class="offer_section layout_padding-bottom">
     <div class="offer_container">
       <div class="container ">
@@ -150,8 +153,7 @@
 
   <!-- end offer section -->
 
-  <!-- food section -->
-
+<!-- food section -->
  <section class="food_section layout_padding-bottom">
     <div class="container">
       <div class="heading_container heading_center">
@@ -220,13 +222,4 @@
     </div>
 </div>
 
-      <div class="btn-box">
-        <a href="">
-          View More
-        </a>
-      </div>
-    </div>
-  </section>
-<!-- offer section -->
-
-  <!-- end food section -->
+{% endblock %}

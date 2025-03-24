@@ -32,8 +32,26 @@ class IndexView(ListView):
         return context
 
 
-def menu_product(request):
-    return render(request, "menu.html")
+
+class Menu_product(ListView):
+    template_name = "menu.html"
+    context_object_name = "products"
+    model = Product
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        category_slug = self.request.GET.get('category')
+        if category_slug:
+            queryset = queryset.filter(category__slug=category_slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+
+        product_images = {image.product_id: image.photo.url for image in ProductImage.objects.all()}
+        context["product_images"] = product_images
+        return context
 
 
 def product_list(request):
@@ -72,3 +90,23 @@ def product_about(request, slug):
         "product": product
     }
     return render(request, "about.html", context)
+
+
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)]['quantity'] += 1
+    else:
+        cart[str(product_id)] = {
+            'name': product.name,
+            'price': str(product.price),
+            'quantity': 1
+        }
+
+    request.session['cart'] = cart
+    request.session.modified = True
+
+    return JsonResponse({'message': 'Product added to cart', 'cart': cart})
+

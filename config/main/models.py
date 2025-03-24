@@ -1,3 +1,5 @@
+from sys import maxsize
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Model, SET_NULL
@@ -50,16 +52,25 @@ class Comment(models.Model):
         return f"Comment by {self.user.username} on {self.product.name}"
 
 
+class Customer(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 
 class Order(models.Model):
-    user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
     discontinued = models.BooleanField(default=False)
     price = models.DecimalField(max_digits=15, decimal_places=2)
 
 
     def __str__(self):
-        return f'{self.user.username} {self.created}'
+        return f'{self.customer.name} {self.created}'
 
 
 class OrderProduct(models.Model):
